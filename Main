@@ -1,1 +1,43 @@
 
+package main;
+
+import java.util.Scanner; 
+import fileread.fileRead;
+import filewrite.fileWrite;
+import keyboardinput.keyboardInput;
+//import movie.Movie;
+import options.Options;
+import java.util.ArrayList;
+
+public class Main{
+	
+	public static void main(String[] args) {
+		
+		Scanner keyb = new Scanner(System.in);
+		System.out.println("Welcome to Colinz Movies\n\nPress enter to start...");
+		
+		fileRead fr = new fileRead ("src/db.txt");
+		fileWrite fw = new fileWrite("src/db.txt");
+		
+		ArrayList<String> lines = new ArrayList<String>();
+		for(int i = 0; i < fr.getNumberOfLines(); i++) {
+			String line = fr.getLine(i);
+			lines.add(line);
+		}
+		
+		for(String fileWrite: lines) {
+			fw.writeLine(fileWrite);
+		}
+		
+		keyboardInput kb = new keyboardInput();
+		Options op = new Options();
+		
+		if(keyb.hasNextLine()) {
+			op.options();
+		}
+		
+		fw.saveFile();
+		keyb.close();
+		kb.closeKeyboard();
+	}
+}
